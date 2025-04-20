@@ -6,4 +6,109 @@
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
   </head>
+  <body>
+    <a-scene background="color: #ECECEC">
+      <!-- Camera -->
+      <a-entity id="cameraRig" position="0.5 2.5 8">
+        <a-entity camera look-controls wasd-controls></a-entity>
+      </a-entity>
+
+      <!-- Lighting -->
+      <a-entity light="type: ambient; intensity: 1.5"></a-entity>
+      <a-entity
+        light="type: directional; intensity: 1"
+        position="5 10 5"
+      ></a-entity>
+
+      <!-- Ground -->
+      <a-plane
+        rotation="-90 0 0"
+        width="100"
+        height="100"
+        color="#ccc"
+      ></a-plane>
+
+      <!-- Assets -->
+      <a-assets>
+        <a-asset-item id="hidden-leaf" src="models/map.glb"></a-asset-item>
+        <a-asset-item
+          id="naruto-house"
+          src="models/narutohouse.glb"
+        ></a-asset-item>
+        <a-asset-item
+          id="itachi"
+          src="models/itachi.glb"
+        ></a-asset-item>   
+        <a-asset-item
+          id="naruto"
+          src="models/naruto_free_fire.glb"
+        ></a-asset-item>
+        <!-- Sound -->
+        <audio
+          id="ambient-sound"
+          src="sounds/Voicy_Naruto - Naruto's Theme song.mp3"
+          loop="true"
+          autoplay="true"
+        ></audio>
+      </a-assets>
+
+      <!-- Black Sky with Stars and Red Moon -->
+      <a-sky color="#000000" src="textures/stars.jpeg"></a-sky>
+      ></a-entity>
+
+      <!-- Hidden Leaf Village-->
+      <a-entity
+        gltf-model="#hidden-leaf"
+        position="0 0 -10"
+        scale="0.225 0.225 0.225"
+      ></a-entity>
+
+      <!-- Naruto's House-->
+      <a-entity
+        gltf-model="#naruto-house"
+        position="10 0 -10"
+        scale="0.15 0.15 0.15"
+      ></a-entity>
+
+      <!-- Naruto -->
+      <a-entity
+        id="naruto-entity"
+        gltf-model="#naruto"
+        animation-mixer
+        position="-4 0 -6"
+        scale="2.5 2.5 2.5"
+          ></a-entity>
+          <!-- Labels -->
+      <a-text
+      value="Naruto's House"
+      position="10 1.5 -10"
+      color="black"
+      align="center"
+    ></a-text>
+    <a-text
+      value="naruto"
+      position="-3 1.5 -6"
+      color="red"
+      align="center"
+    ></a-text>
+  </a-scene>
+</body>
+  <script>
+    // Play ambient sound
+    const ambientSound = document.querySelector("#ambient-sound");
+    ambientSound.play();
+
+    // Animation for Naruto
+    const narutoEntity = document.querySelector("#naruto-entity");
+    narutoEntity.addEventListener("model-loaded", () => {
+      const mixer = new THREE.AnimationMixer(narutoEntity.getObject3D("mesh"));
+      const action = mixer.clipAction(narutoEntity.getObject3D("mesh").animations[0]);
+      action.play();
+      function animate() {
+        requestAnimationFrame(animate);
+        mixer.update(0.01);
+      }
+      animate();
+    });
+  </script>
 </html>
