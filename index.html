@@ -52,7 +52,7 @@
         ></audio>
       </a-assets>
 
-      <!-- Black Sky with Stars and Red Moon -->
+      <!-- Black Sky with Stars  -->
       <a-sky color="#000000" src="textures/stars.jpeg"></a-sky>
       ></a-entity>
 
@@ -78,37 +78,34 @@
         position="-4 0 -6"
         scale="2.5 2.5 2.5"
           ></a-entity>
-          <!-- Labels -->
-      <a-text
-      value="Naruto's House"
-      position="10 1.5 -10"
-      color="black"
-      align="center"
-    ></a-text>
-    <a-text
-      value="naruto"
-      position="-3 1.5 -6"
-      color="red"
-      align="center"
-    ></a-text>
-  </a-scene>
-</body>
-  <script>
-    // Play ambient sound
-    const ambientSound = document.querySelector("#ambient-sound");
-    ambientSound.play();
+        <!-- Naruto Rage (left side) -->
+          <a-entity
+  id="naruto-rage"
+  gltf-model="#naruto-model"
+  animation-mixer="clip: idle"
+  position="-2 0 -10"
+  scale="0.15 0.15 0.15"
+></a-entity>
+      <a-box position="0 1 -3" color="orange" id="clone-button"></a-box>
 
-    // Animation for Naruto
-    const narutoEntity = document.querySelector("#naruto-entity");
-    narutoEntity.addEventListener("model-loaded", () => {
-      const mixer = new THREE.AnimationMixer(narutoEntity.getObject3D("mesh"));
-      const action = mixer.clipAction(narutoEntity.getObject3D("mesh").animations[0]);
-      action.play();
-      function animate() {
-        requestAnimationFrame(animate);
-        mixer.update(0.01);
-      }
-      animate();
-    });
-  </script>
+
+</script>
+
+
+      
+      <!-- Labels -->
+      <a-text
+        value="Naruto's House"
+        position="10 1.5 -10"
+        color="black"
+        align="center"
+      ></a-text>
+      <a-text
+        value="naruto"
+        position="-3 1.5 -6"
+        color="red"
+        align="center"
+      ></a-text>
+    </a-scene>
+  </body>
 </html>
